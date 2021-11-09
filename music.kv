@@ -1,0 +1,86 @@
+#: import ew kivy.uix.effectwidget
+
+<MusicScreen>
+    EffectWidget:
+        effects:[ew.VerticalBlurEffect(size=6),ew.HorizontalBlurEffect(size=6)]
+        FitImage:
+            source:"C:\\Users\\User\\wp.jpg"
+
+
+    MDBoxLayout:
+        orientation:"vertical"
+        padding:("10dp","30dp","10dp","50dp")
+        SongCover:
+            id:scover
+            size:(250,250)
+            size_hint:None,None
+            pos_hint:{"center_x":0.5}
+            RotatingImage:
+                angle:scover.angle
+                source:"C:\\Users\\User\\wp.jpg"
+                radius:[200]
+        Widget:
+            size_hint:None,None
+            height:20
+        Label:
+            text:"song name"
+            font_size:20
+            bold:True
+            height:self.texture_size[1]
+            size_hint_y:None
+        Label:
+            text:"artist name"
+            font_size:20
+            height:self.texture_size[1]
+            size_hint_y:None
+        MDBoxLayout:
+            orientation:"vertical"
+            Slider:
+                id:sprogress
+                color:[1,1,.2,1]
+                min:0
+                max:100
+                value:0
+                background_width:"20"
+                cursor_image:""
+                cursor_size:[10,10]
+                value_track_color:[1,1,1,1]
+                value_track:True
+            MDBoxLayout:
+                MyIcon:
+                    icon:"restart"
+                MyIcon:
+                    icon:"skip-previous-outline"
+                MyIcon:
+                    icon:"skip-backward-outline"
+                MyIcon:
+                    icon:"play"
+                    on_press:scover.play(sprogress)
+                MyIcon:
+                    icon:"restart"
+                MyIcon:
+                    icon:"skip-forward-outline"
+                MyIcon:
+                    icon:"skip-next-outline"
+                MyIcon:
+                    icon:"format-list-bulleted"
+
+<MyIcon@MDIconButton>
+    color:[0,.5,0.09,.2,1]
+    size_hint:None,None
+    user_font_size:"17sp"
+    theme_text_color:"Custom"
+    #size:["18dp","18dp"]
+    text_color:[1,1,1,1]
+
+
+<RotatingImage@FitImage>
+    angle:0
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle:root.angle
+            origin:self.center
+    canvas.after:
+        PopMatrix
+
